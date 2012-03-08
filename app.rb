@@ -14,7 +14,7 @@ ActiveRecord::Schema.define do
   create_table :test_models do |table|
     table.string :name
     table.string :description
-    table.timestamps
+    table.date :created_at
   end
 end
 

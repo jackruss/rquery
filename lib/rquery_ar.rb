@@ -5,18 +5,16 @@ module RQuery
     def rquery(cmd)
       ar_statement = ''
       ar_statement += where_clause(JSON.parse(cmd[:where])) if cmd[:where]
-      # order_clause(JSON.parse(cmd[:order])) if cmd[:order]
-      # limit_clause(JSON.parse(cmd[:limit])) if cmd[:limit]
+      ar_statement += order_clause(JSON.parse(cmd[:order])) if cmd[:order]
+      ar_statement += limit_clause(cmd[:limit]) if cmd[:limit]
       # count_clause(JSON.parse(cmd[:count])) if cmd[:count]
       # includes_clause(JSON.parse(cmd[:includes])) if cmd[:includes]
       # skip_clause(JSON.parse(cmd[:skip])) if cmd[:skip]
       # joins_clause(JSON.parse(cmd[:joins])) if cmd[:joins]
-      eval(ar_statement[1..-1])
+      eval(ar_statement[1..-1]).to_a
     end
 
-
-    private
-
+  private
     ## WHERE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def where_clause(cmd)
       ar_statement, clause = ""
@@ -29,35 +27,62 @@ module RQuery
 
     def build_key_value(key, value)
       action, val = ''
-      value.each{ |k, v| action = replace(k) if k.match(/^\$/); val = v }
-      "#{key} #{action} \"" + val + "\""
+      value.each do |k, v|
+        action = replace(k) if k.match(/^\$/)
+        val = v
+      end
+      build_clause(key, action, val)
     end
-    ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    def build_clause(key, action, val)
+      if action == 'IS'
+        "#{key} #{action} #{val == '1' ? 'NOT NULL' : 'NULL'}"
+      elsif action == "IN" || action == "NOT IN"
+        "#{key} #{action} #{val.gsub("\'", "\"")}"
+      else
+        "#{key} #{action} \"" + val + "\""
+      end
+    end
+
+    ## ORDER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def order_clause(cmd)
-      order cmd
+      ar_statement = ""
+      cmd.each do |value|
+        ar_statement += ".order('#{value}')"
+      end
+      ar_statement
     end
 
+    ## LIMIT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def limit_clause(cmd)
-      limit cmd
+      ar_statement = ""
+      cmd.each do |value|
+        ar_statement += ".limit(#{value})"
+      end
+      ar_statement
     end
 
+    ## COUNT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def count_clause(cmd)
       count cmd
     end
 
+    ## INCLUDES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def includes_clause(cmd)
       includes cmd
     end
 
+    ## SKIP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def skip_clause(cmd)
       skip cmd
     end
 
+    ## JOINS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def joins_clause(cmd)
       joins cmd
     end
 
+    ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def replace(match_data)
       case match_data
         when '$gt' then '>'
@@ -65,11 +90,12 @@ module RQuery
         when '$gte' then '>='
         when '$lte' then '<='
         when '$ne' then '!='
-        when '$in' then 'in'
-        when '$nin' then 'not in'
-        when '$exists' then 'exists'
-        when '$like' then 'like'
-        when '$regexp' then 'regexp'
+        when '$in' then 'IN'
+        when '$nin' then 'NOT IN'
+        when '$exists' then 'IS'
+        when '$like' then 'LIKE'
+        when '$ilike' then 'ILIKE'
+        when '$regexp' then 'REGEXP'
       end
     end
 

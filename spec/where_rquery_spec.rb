@@ -43,11 +43,11 @@ describe 'GET /resources' do
       last_response.headers["Content-Type"].should == 'application/json'
       last_response.should be_ok #checks status code 200
       JSON.parse(last_response.body).first["name"].should == "foo"
-      JSON.parse(last_response.body).first["created_at"].should == "2012-03-08T00:00:00-05:00"
+      JSON.parse(last_response.body).first["created_at"].should == "2012-03-08"
     end
 
     it 'should render conditionals where => [{ :name => "foo" }, ["created_at > ?", "2012-03-01"]]' do
-      get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$lt\":\"2012-03-01\"}}"
+      get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$gt\":\"2012-03-09\"}}"
       JSON.parse(last_response.body).should be_empty
     end
   end
@@ -58,11 +58,19 @@ describe 'GET /resources' do
       last_response.headers["Content-Type"].should == 'application/json'
       last_response.should be_ok #checks status code 200
       JSON.parse(last_response.body).first["name"].should == "foo"
-      JSON.parse(last_response.body).first["created_at"].should == "2012-03-08T00:00:00-05:00"
+      JSON.parse(last_response.body).first["created_at"].should == "2012-03-08"
     end
 
     it 'should render conditionals where => [{ :name => "foo" }, ["created_at >= ?", "2012-03-01"]]' do
-      get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$lte\":\"2012-03-01\"}}"
+      get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$gte\":\"2012-03-08\"}}"
+      last_response.headers["Content-Type"].should == 'application/json'
+      last_response.should be_ok #checks status code 200
+      JSON.parse(last_response.body).first["name"].should == "foo"
+      JSON.parse(last_response.body).first["created_at"].should == "2012-03-08"
+    end
+
+    it 'should render conditionals where => [{ :name => "foo" }, ["created_at >= ?", "2012-03-01"]]' do
+      get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$gte\":\"2012-03-09\"}}"
       JSON.parse(last_response.body).should be_empty
     end
   end
@@ -73,7 +81,7 @@ describe 'GET /resources' do
       last_response.headers["Content-Type"].should == 'application/json'
       last_response.should be_ok #checks status code 200
       JSON.parse(last_response.body).first["name"].should == "foo"
-      JSON.parse(last_response.body).first["created_at"].should == "2012-03-08T00:00:00-05:00"
+      JSON.parse(last_response.body).first["created_at"].should == "2012-03-08"
     end
 
     it 'should render conditionals where => [{ :name => "foo" }, ["created_at != ?", "2012-03-01"]]' do
