@@ -1,4 +1,31 @@
-# rquery
+# rquery spec
+
+rquery spec is a collection of rquery gems for several different orm and
+database driver libraries.
+
+rquery will receive a domain specific query language that needs to be
+converted to the orm or database dsl.  Each rquery gem will act as the
+coversion and return the requested results.
+
+RQuery Spec is a spec suite test application that will maintain the
+current version of rquery spec tests that will keep each gem up to 
+compliance with the api.
+
+## install
+
+gem install rquery-spec
+
+## install rquery active record
+
+gem install rquery-ar
+
+## run specs
+
+rquery-spec rquery-ar
+#> Specs passed 0 out of 100
+
+
+Below are some test cases:
 
 A ruby gem that takes a ruby hash that specifies the where, order, limit, select, etc nodes of an active relation and converts it into an a set of objects
 
