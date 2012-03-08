@@ -14,8 +14,9 @@ ActiveRecord::Schema.define do
   create_table :test_models do |table|
     table.string :name
     table.string :description
+    table.timestamps
   end
-end    
+end
 
 class TestModel < ActiveRecord::Base
   include RQuery
