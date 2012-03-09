@@ -26,32 +26,35 @@ describe 'Model#rquery' do
     TestModel.create(:name => "aafoo", :description => "aabar", :created_at => '2012-03-07')
     TestModel.create(:name => "bfoo", :description => "bbar", :created_at => '2012-03-07')
     TestModel.create(:name => "cfoo", :description => "cbar", :created_at => '2012-03-08')
+  end
 
+  after do
+    TestModel.delete_all
   end
 
   it 'should return [{:name => "aafoo", :description => "aabar"}]' do
     results = TestModel.rquery :limit => '3', :skip => "1"
-    results.count.should == 3
-    results.first.name.should == 'aafoo'
+    results[:results].count.should == 3
+    results[:results].first.name.should == 'aafoo'
   end
 
   it 'should return [{:name => "cfoo", :description => "cbar"}]' do
     results = TestModel.rquery :limit => '1', :skip => "3"
-    results.count.should == 1
-    results.first.name.should == 'cfoo'
+    results[:results].count.should == 1
+    results[:results].first.name.should == 'cfoo'
   end
 
   it 'should return [{:name => "cfoo", :description => "cbar"}]' do
     results = TestModel.rquery :skip => "1"
-    results.count.should == 3
-    results.first.name.should == 'aafoo'
+    results[:results].count.should == 3
+    results[:results].first.name.should == 'aafoo'
   end
 
 
   it 'should return [{:name => "cfoo", :description => "cbar"}]' do
     results = TestModel.rquery :skip => "3"
-    results.count.should == 1
-    results.first.name.should == 'cfoo'
+    results[:results].count.should == 1
+    results[:results].first.name.should == 'cfoo'
   end
 
 

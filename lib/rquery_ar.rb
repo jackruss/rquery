@@ -10,7 +10,7 @@ module RQuery
       ar_statement += skip_clause(cmd[:skip]) if cmd[:skip]
       # includes_clause(JSON.parse(cmd[:includes])) if cmd[:includes]
       # joins_clause(JSON.parse(cmd[:joins])) if cmd[:joins]
-      ar_statement = (ar_statement == '' ? eval('all').to_a : eval(ar_statement[1..-1]).to_a)
+      ar_statement = (ar_statement == '' ? {:results => eval('all').to_a} : {:results => eval(ar_statement[1..-1]).to_a})
       ar_statement = count_clause(cmd[:count], ar_statement) if cmd[:count]
       ar_statement
     end
@@ -64,7 +64,7 @@ module RQuery
     ## COUNT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def count_clause(cmd, ar_statement)
       if cmd == "1"
-        ar_statement.count
+        ar_statement.merge(:count => ar_statement[:results].count)
       else
         ar_statement
       end

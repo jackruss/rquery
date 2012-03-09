@@ -28,24 +28,28 @@ describe 'Model#rquery' do
 
   end
 
+  after do
+    TestModel.delete_all
+  end
+
   it 'should return 2' do
     results = TestModel.rquery :where => "{\"name\":\"afoo\"}", :count => "1"
-    results.should == 2
+    results[:count].should == 2
   end
 
   it 'should return 1' do
     results = TestModel.rquery :where => "{\"name\":\"cfoo\"}",  :count => "1"
-    results.should == 1
+    results[:count].should == 1
   end
 
   it 'should return 4' do
     results = TestModel.rquery :count => "1"
-    results.should == 4
+    results[:count].should == 4
   end
 
   it 'should be empty' do
     results = TestModel.rquery :count => "0"
-    results.count.should == 4
-    results.first.name.should == 'afoo'
+    results[:results].count.should == 4
+    results[:results].first.name.should == 'afoo'
   end
 end

@@ -29,16 +29,20 @@ describe 'Model#rquery' do
 
   end
 
+  after do
+    TestModel.delete_all
+  end
+
   it 'should return [{:created_at => "foo", :description => "bar"}]' do
     results = TestModel.rquery :limit => "1"
-    results.count.should == 1
-    results.first.name.should == 'afoo'
+    results[:results].count.should == 1
+    results[:results].first.name.should == 'afoo'
   end
 
   it 'should return [{:created_at => "foo", :description => "bar"}]' do
     results = TestModel.rquery :limit => "3"
-    results.count.should == 3
-    results.last.name.should == 'bfoo'
+    results[:results].count.should == 3
+    results[:results].last.name.should == 'bfoo'
   end
 
 end
