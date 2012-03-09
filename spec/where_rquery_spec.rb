@@ -63,7 +63,7 @@ describe 'GET /resources' do
 
     it 'should render conditionals where => [{ :name => "foo" }, ["created_at >= ?", "2012-03-01"]]' do
       get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$gte\":\"2012-03-08\"}}"
-      last_response.headers["Content-Type"].should == 'application/json'
+      last_response.headers["Content-Type"].should == 'application/json;charset=utf-8'
       last_response.should be_ok #checks status code 200
       JSON.parse(last_response.body).first["name"].should == "foo"
       JSON.parse(last_response.body).first["created_at"].should == "2012-03-08"
@@ -78,7 +78,7 @@ describe 'GET /resources' do
   context 'receives where={"name": "foo", "created_at": {"$ne": "2012-03-01"}}' do
     it 'should render conditionals where => [{ :name => "foo" }, ["created_at != ?", "2012-03-01"]]' do
       get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$ne\":\"2012-03-01\"}}"
-      last_response.headers["Content-Type"].should == 'application/json'
+      last_response.headers["Content-Type"].should == 'application/json;charset=utf-8'
       last_response.should be_ok #checks status code 200
       JSON.parse(last_response.body).first["name"].should == "foo"
       JSON.parse(last_response.body).first["created_at"].should == "2012-03-08"
