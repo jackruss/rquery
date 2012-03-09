@@ -16,5 +16,4 @@ describe 'GET /resources' do
       JSON.parse(last_response.body).first["description"].should == "abar"
     end
   end
-
 end
