@@ -7,11 +7,12 @@ module RQuery
       ar_statement += where_clause(JSON.parse(cmd[:where])) if cmd[:where]
       ar_statement += order_clause(JSON.parse(cmd[:order])) if cmd[:order]
       ar_statement += limit_clause(cmd[:limit]) if cmd[:limit]
-      # count_clause(JSON.parse(cmd[:count])) if cmd[:count]
+      # ar_statement += skip_clause(JSON.parse(cmd[:skip])) if cmd[:skip]
       # includes_clause(JSON.parse(cmd[:includes])) if cmd[:includes]
-      # skip_clause(JSON.parse(cmd[:skip])) if cmd[:skip]
       # joins_clause(JSON.parse(cmd[:joins])) if cmd[:joins]
-      eval(ar_statement[1..-1]).to_a
+      ar_statement = (ar_statement == '' ? eval('all').to_a : eval(ar_statement[1..-1]).to_a)
+      ar_statement = count_clause(cmd[:count], ar_statement) if cmd[:count]
+      ar_statement
     end
 
   private
@@ -19,22 +20,22 @@ module RQuery
     def where_clause(cmd)
       ar_statement, clause = ""
       cmd.each do |key, value|
-        clause = value.kind_of?(Hash) ? build_key_value(key, value) : "#{key} = \"" + value + "\""
+        clause = value.kind_of?(Hash) ? where_key_value(key, value) : "#{key} = \"" + value + "\""
         ar_statement += ".where('#{clause}')"
       end
       ar_statement
     end
 
-    def build_key_value(key, value)
+    def where_key_value(key, value)
       action, val = ''
       value.each do |k, v|
         action = replace(k) if k.match(/^\$/)
         val = v
       end
-      build_clause(key, action, val)
+      where_build_clause(key, action, val)
     end
 
-    def build_clause(key, action, val)
+    def where_build_clause(key, action, val)
       if action == 'IS'
         "#{key} #{action} #{val == '1' ? 'NOT NULL' : 'NULL'}"
       elsif action == "IN" || action == "NOT IN"
@@ -56,25 +57,27 @@ module RQuery
     ## LIMIT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def limit_clause(cmd)
       ar_statement = ""
-      cmd.each do |value|
-        ar_statement += ".limit(#{value})"
-      end
+      cmd.each { |value| ar_statement += ".limit(#{value})" }
       ar_statement
     end
 
     ## COUNT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    def count_clause(cmd)
-      count cmd
-    end
-
-    ## INCLUDES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    def includes_clause(cmd)
-      includes cmd
+    def count_clause(cmd, ar_statement)
+      if cmd == "1"
+        ar_statement.count
+      else
+        ar_statement
+      end
     end
 
     ## SKIP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def skip_clause(cmd)
       skip cmd
+    end
+
+    ## INCLUDES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    def includes_clause(cmd)
+      includes cmd
     end
 
     ## JOINS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
