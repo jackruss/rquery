@@ -34,6 +34,10 @@ before do
   TestModel.create(:name => "cfoo", :description => "cbar", :created_at => '2012-03-12')
 end
 
+after do
+  TestModel.delete_all
+end
+
 
 get '/' do
   'Hello World'
