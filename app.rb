@@ -22,10 +22,16 @@ class TestModel < ActiveRecord::Base
   include RQuery
 end
 
-TestModel.create(:name => "foo", :description => "bar", :created_at => "2012-03-08")
+
 
 before do
   content_type 'application/json'
+
+  TestModel.create(:name => "foo", :description => "bar", :created_at => "2012-03-08")
+  TestModel.create(:name => "afoo", :description => "abar", :created_at => '2012-03-09')
+  TestModel.create(:name => "afoo", :description => "aabar", :created_at => '2012-03-10')
+  TestModel.create(:name => "bfoo", :description => "bbar", :created_at => '2012-03-11')
+  TestModel.create(:name => "cfoo", :description => "cbar", :created_at => '2012-03-12')
 end
 
 
