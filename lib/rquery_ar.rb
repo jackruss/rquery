@@ -7,7 +7,7 @@ module RQuery
       ar_statement += where_clause(JSON.parse(cmd[:where])) if cmd[:where]
       ar_statement += order_clause(JSON.parse(cmd[:order])) if cmd[:order]
       ar_statement += limit_clause(cmd[:limit]) if cmd[:limit]
-      # ar_statement += skip_clause(JSON.parse(cmd[:skip])) if cmd[:skip]
+      ar_statement += skip_clause(cmd[:skip]) if cmd[:skip]
       # includes_clause(JSON.parse(cmd[:includes])) if cmd[:includes]
       # joins_clause(JSON.parse(cmd[:joins])) if cmd[:joins]
       ar_statement = (ar_statement == '' ? eval('all').to_a : eval(ar_statement[1..-1]).to_a)
@@ -72,7 +72,9 @@ module RQuery
 
     ## SKIP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def skip_clause(cmd)
-      skip cmd
+      ar_statement = ""
+      cmd.each { |value| ar_statement += ".offset(#{value})" }
+      ar_statement
     end
 
     ## INCLUDES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
