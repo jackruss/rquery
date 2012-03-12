@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/jackhq/rquery.png)](http://travis-ci.org/jackhq/rquery)
+
 # rquery spec
 
 rquery spec is a collection of rquery gems for several different orm and
@@ -8,12 +10,12 @@ converted to the orm or database dsl.  Each rquery gem will act as the
 coversion and return the requested results.
 
 RQuery Spec is a spec suite test application that will maintain the
-current version of rquery spec tests that will keep each gem up to 
+current version of rquery spec tests that will keep each gem up to
 compliance with the api.
 
 ## install
 
-gem install rquery-spec
+    gem install rquery
 
 ## install rquery active record
 
@@ -59,7 +61,7 @@ JSON.parse(where)
 
 => { "last_name": {"$like" => "foo%" }}
 
-needs to convert to 
+needs to convert to
 
 Patient.where("last_name like ?", "foo%")
 
@@ -74,7 +76,7 @@ JSON.parse(where)
 
 => {"created_at" => {"$gt" => "2012-03-01"}}
 
-needs to convert to 
+needs to convert to
 
 Patient.where("created_at > ?", "2012-03-01")
 
@@ -90,7 +92,7 @@ JSON.parse(where)
 
 => {"created_at" => {"$gt" => "2012-03-01"}, "first_name" => "Tom"}
 
-needs to convert to 
+needs to convert to
 
 Patient.where("created_at > ?", "2012-03-01").where("first_name" => "Tom")
 
@@ -108,6 +110,6 @@ JSON.parse(where)
 => {"created_at" => {"$gt" => "2012-03-01"}, "first_name" => "Tom"}
 
 
-needs to convert to 
+needs to convert to
 
 Patient.where("created_at > ?", "2012-03-01").where("first_name" => "Tom").order("updated_at DESC")
