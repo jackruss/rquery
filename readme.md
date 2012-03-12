@@ -195,7 +195,7 @@ and
 
 Each will return the record where name equals "foo"
 
-#### where rexexp:
+#### where regexp:
 
 **Note**: only works with mysql
 
