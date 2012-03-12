@@ -1,4 +1,4 @@
-[!https://secure.travis-ci.org/jackhq/rquery.png!](http://travis-ci.org/jackhq/rquery)
+"!https://secure.travis-ci.org/jackhq/rquery.png!":http://travis-ci.org/jackhq/rquery
 
 # rquery spec
 
