@@ -18,7 +18,7 @@ describe 'GET /resources' do
 
     it 'should return not return any results where name equals foo2' do
       get '/resources', :where => "{\"name\":\"foo2\"}"
-      JSON.parse(last_response.body)['results'].should be_empty
+      JSON.parse(last_response.body).should be_empty
     end
   end
 
@@ -33,7 +33,7 @@ describe 'GET /resources' do
 
     it 'should not return any results where name equals foo and description equals bar2' do
       get '/resources', :where => "{\"name\":\"foo\",\"description\":\"bar2\"}"
-      JSON.parse(last_response.body)['results'].should be_empty
+      JSON.parse(last_response.body).should be_empty
     end
   end
 
@@ -48,7 +48,7 @@ describe 'GET /resources' do
 
     it 'should not return any results where name equals foo and created at is greater than 2012-03-09' do
       get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$gt\":\"2012-03-09\"}}"
-      JSON.parse(last_response.body)['results'].should be_empty
+      JSON.parse(last_response.body).should be_empty
     end
   end
 
@@ -71,7 +71,7 @@ describe 'GET /resources' do
 
     it 'should not return any results where name equals foo and created at is greater than or equal to 2012-03-09' do
       get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$gte\":\"2012-03-09\"}}"
-      JSON.parse(last_response.body)['results'].should be_empty
+      JSON.parse(last_response.body).should be_empty
     end
   end
 
@@ -86,7 +86,7 @@ describe 'GET /resources' do
 
     it 'should not return any results where name equals foo and created at is less than 2012-03-01' do
       get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$lt\":\"2012-03-01\"}}"
-      JSON.parse(last_response.body)['results'].should be_empty
+      JSON.parse(last_response.body).should be_empty
     end
   end
 
@@ -109,9 +109,9 @@ describe 'GET /resources' do
 
     it 'should not return any results where name equals foo and created at is less than or equal to 2012-03-01' do
       get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$lte\":\"2012-03-01\"}}"
-      JSON.parse(last_response.body)['results'].should be_empty
+      JSON.parse(last_response.body).should be_empty
     end
-  end 
+  end
 
   context 'where not equals' do
     it 'should return a result where name equals foo and created at is not equal to 2012-03-01' do
@@ -124,7 +124,7 @@ describe 'GET /resources' do
 
     it 'should not return any results where name equals foo and created at is not equal to 2012-03-08' do
       get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$ne\":\"2012-03-08\"}}"
-      JSON.parse(last_response.body)['results'].should be_empty
+      JSON.parse(last_response.body).should be_empty
     end
   end
 
@@ -139,7 +139,7 @@ describe 'GET /resources' do
 
     it 'should not return any results where name equals foo and created at in ("2012-03-01")' do
       get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$in\":\"(\'2012-03-01\')\"}}"
-      JSON.parse(last_response.body)['results'].should be_empty
+      JSON.parse(last_response.body).should be_empty
     end
   end
 
@@ -154,10 +154,10 @@ describe 'GET /resources' do
 
     it 'should not return any results where name equals foo and created at not in ("2012-03-08")' do
       get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$nin\":\"(\'2012-03-08\')\"}}"
-      JSON.parse(last_response.body)['results'].should be_empty
+      JSON.parse(last_response.body).should be_empty
     end
   end
-  
+
   context 'where exists' do
     it 'should return a result where name equals foo and created at IS NOT NULL' do
       get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$exists\":\"1\"}}"
@@ -169,7 +169,7 @@ describe 'GET /resources' do
 
     it 'should not return any results where name equals foo and created at IS NULL' do
       get '/resources', :where => "{\"name\":\"foo\",\"created_at\":{\"$exists\":\"0\"}}"
-      JSON.parse(last_response.body)['results'].should be_empty
+      JSON.parse(last_response.body).should be_empty
     end
   end
 
@@ -183,7 +183,7 @@ describe 'GET /resources' do
 
     it 'should not return any results where name LIKE %bar' do
       get '/resources', :where => "{\"name\":{\"$like\":\"%bar\"}}"
-      JSON.parse(last_response.body)['results'].should be_empty
+      JSON.parse(last_response.body).should be_empty
     end
   end
 

@@ -37,7 +37,7 @@ describe 'Model#rquery' do
 
   it 'should return [{:name => "foo", :description => "bar"}]' do
     results = TestModel.rquery :where => "{\"name\":\"foo2\"}"
-    results[:results].should be_empty
+    results.should be_empty
   end
 
   it 'should return [{:name => "foo", :description => "bar"}]' do
@@ -49,7 +49,7 @@ describe 'Model#rquery' do
 
   it 'should return [{:name => "foo", :description => "bar"}]' do
     results = TestModel.rquery :where => "{\"name\":\"foo\",\"description\":\"bar2\"}"
-    results[:results].should be_empty
+    results.should be_empty
   end
 
   it 'should return [{:name => "foo", :description => "bar", :created_at => "2012-03-08"}]' do
@@ -60,7 +60,7 @@ describe 'Model#rquery' do
 
   it 'should return [{:name => "foo", :description => "bar", :created_at => "2012-03-08"}]' do
     results = TestModel.rquery :where => "{\"name\":\"foo\",\"created_at\":{\"$gt\":\"2012-03-09\"}}"
-    results[:results].should be_empty
+    results.should be_empty
   end
 
   it 'should return [{:name => "foo", :description => "bar", :created_at => "2012-03-08"}]' do
@@ -77,7 +77,7 @@ describe 'Model#rquery' do
 
   it 'should return [{:name => "foo", :description => "bar", :created_at => "2012-03-08"}]' do
     results = TestModel.rquery :where => "{\"name\":\"foo\",\"created_at\":{\"$gte\":\"2012-03-09\"}}"
-    results[:results].should be_empty
+    results.should be_empty
   end
 
   it 'should return [{:name => "foo", :description => "bar", :created_at => "2012-03-08"}]' do
@@ -88,7 +88,7 @@ describe 'Model#rquery' do
 
   it 'should return [{:name => "foo", :description => "bar", :created_at => "2012-03-08"}]' do
     results = TestModel.rquery :where => "{\"name\":\"foo\",\"created_at\":{\"$lt\":\"2012-03-07\"}}"
-    results[:results].should be_empty
+    results.should be_empty
   end
 
   it 'should return [{:name => "foo", :description => "bar", :created_at => "2012-03-08 00:00:00"}]' do
@@ -105,7 +105,7 @@ describe 'Model#rquery' do
 
   it 'should return [{:name => "foo", :description => "bar", :created_at => "2012-03-08"}]' do
     results = TestModel.rquery :where => "{\"name\":\"foo\",\"created_at\":{\"$lte\":\"2012-03-07\"}}"
-    results[:results].should be_empty
+    results.should be_empty
   end
 
   it 'should return [{:name => "foo", :description => "bar"}]' do
@@ -116,12 +116,12 @@ describe 'Model#rquery' do
 
   it 'should return [{:name => "foo", :description => "bar"}]' do
     results = TestModel.rquery :where => "{\"name\":{\"$ne\":\"foo\"}}"
-    results[:results].should be_empty
+    results.should be_empty
   end
 
   it 'should return [{:name => "foo", :description => "bar"}]' do
     results = TestModel.rquery :where => "{\"name\":{\"$ne\":\"foo\"}}"
-    results[:results].should be_empty
+    results.should be_empty
   end
 
   it 'should return [{:name => "foo", :description => "bar"}]' do
@@ -132,7 +132,7 @@ describe 'Model#rquery' do
 
   it 'should return [{:name => "foo", :description => "bar"}]' do
     results = TestModel.rquery :where => "{\"name\":{\"$in\":\"('foobar')\"}}"
-    results[:results].should be_empty
+    results.should be_empty
   end
 
   it 'should return [{:name => "foo", :description => "bar"}]' do
@@ -143,7 +143,7 @@ describe 'Model#rquery' do
 
   it 'should return [{:name => "foo", :description => "bar"}]' do
     results = TestModel.rquery :where => "{\"name\":{\"$nin\":\"('foo','bar')\"}}"
-    results[:results].should be_empty
+    results.should be_empty
   end
 
   it 'should return [{:name => "foo", :description => "bar"}]' do
@@ -154,7 +154,7 @@ describe 'Model#rquery' do
 
   it 'should return [{:name => "foo", :description => "bar"}]' do
     results = TestModel.rquery :where => "{\"name\":{\"$exists\":\"0\"}}"
-    results[:results].should be_empty
+    results.should be_empty
   end
 
   it 'should return [{:name => "foo", :description => "bar"}]' do
@@ -177,7 +177,7 @@ describe 'Model#rquery' do
 
   it 'should return [{:name => "foo", :description => "bar"}]' do
     results = TestModel.rquery :where => "{\"name\":{\"$like\":\"%bar%\"}}"
-    results[:results].should be_empty
+    results.should be_empty
   end
 
   # it 'should return [{:name => "foo", :description => "bar"}]' do

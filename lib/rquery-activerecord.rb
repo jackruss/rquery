@@ -13,7 +13,7 @@ module RQuery
         ar_statement += skip_clause(cmd[:skip]) if cmd[:skip]
         ar_statement = (ar_statement == '' ? {:results => eval('all').to_a} : {:results => eval(ar_statement[1..-1]).to_a})
         ar_statement = count_clause(cmd[:count], ar_statement) if cmd[:count]
-        ar_statement
+        ar_statement[:results].present? || ar_statement[:count].present? ? ar_statement : {}
       else
         {}
       end
