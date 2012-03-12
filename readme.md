@@ -17,10 +17,6 @@ compliance with the api.
 
     gem install rquery
 
-## install rquery active record
-
-gem install rquery-ar
-
 ## run specs
 
 rquery-spec rquery-ar
