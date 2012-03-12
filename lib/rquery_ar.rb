@@ -5,12 +5,12 @@ module RQuery
     def rquery(cmd=nil)
       if cmd
         ar_statement = ''
+        # TODO includes_clause(JSON.parse(cmd[:includes])) if cmd[:includes]
+        # TODO joins_clause(JSON.parse(cmd[:joins])) if cmd[:joins]
         ar_statement += where_clause(JSON.parse(cmd[:where])) if cmd[:where]
         ar_statement += order_clause(JSON.parse(cmd[:order])) if cmd[:order]
         ar_statement += limit_clause(cmd[:limit]) if cmd[:limit]
         ar_statement += skip_clause(cmd[:skip]) if cmd[:skip]
-        # includes_clause(JSON.parse(cmd[:includes])) if cmd[:includes]
-        # joins_clause(JSON.parse(cmd[:joins])) if cmd[:joins]
         ar_statement = (ar_statement == '' ? {:results => eval('all').to_a} : {:results => eval(ar_statement[1..-1]).to_a})
         ar_statement = count_clause(cmd[:count], ar_statement) if cmd[:count]
         ar_statement
@@ -81,11 +81,13 @@ module RQuery
       ar_statement
     end
 
+    #TODO
     ## INCLUDES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def includes_clause(cmd)
       includes cmd
     end
 
+    #TODO
     ## JOINS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def joins_clause(cmd)
       joins cmd

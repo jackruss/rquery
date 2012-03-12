@@ -260,7 +260,10 @@ Returns the next 10 objects
 
 
 
+## Todos
 
+  - Add support for includes queries
+  - Add support for joins queries
 
 ## Testing the gem
 
