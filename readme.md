@@ -73,7 +73,7 @@ $regex | regex match
 
 Returns
 
-    {:results=>[{#<User id: 1, first_name:"foo", last_name:"bar"}, {#<User id: 2, first_name:"foo", last_name:"Baz"}]}
+    {:results=>[{#<User id: 1, first_name:"foo", last_name:"bar"},{#<User id: 2, first_name:"foo", last_name:"Baz"}]}
 
 ### Chaining queries
 
@@ -81,7 +81,7 @@ Returns
 
 Returns
 
-    {:results=>[{#<User id: 2, first_name:"foo", last_name:"Baz"}, {#<User id: 1, first_name:"foo", last_name:"bar"}], :count =>2}
+    {:results=>[{#<User id: 2, first_name:"foo", last_name:"Baz"},{#<User id: 1, first_name:"foo", last_name:"bar"}],:count =>2}
 
 
 ## JSON Examples
