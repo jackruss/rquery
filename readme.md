@@ -159,7 +159,7 @@ Returns all records where name equals "foo" or "bar"
 
 Returns all records where name does not equal "foo" or "bar"
 
-#### where exhists true:
+#### where exists true:
 
     {
       "where": {"name":{"$exists":"1"}}
@@ -167,7 +167,7 @@ Returns all records where name does not equal "foo" or "bar"
 
 Returns all records where name is not null
 
-#### where exhists false:
+#### where exists false:
 
     {
       "where": {"name":{"$exists":"0"}}
