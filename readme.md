@@ -1,6 +1,6 @@
 [![Build Status](https://secure.travis-ci.org/jackruss/rquery.png?branch=master)](http://travis-ci.org/jackruss/rquery)
 
-# rquery spec
+# RQuery spec
 
 rquery spec is a collection of rquery gems for several different orm and
 database driver libraries.
