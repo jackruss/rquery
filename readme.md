@@ -265,8 +265,8 @@ Returns the next 10 objects
   - Add support for includes queries
   - Add support for joins queries
 
-## Testing the gem
+## Testing RQuery
 
-    gem install r-query
-
+    git clone git@github.com:jackruss/rquery.git
+    cd rquery
     bundle exec rspec spec
