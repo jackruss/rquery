@@ -1,4 +1,4 @@
-require './lib/rquery_ar'
+require './lib/rquery-activerecord'
 require 'sqlite3'
 require 'active_record'
 
@@ -21,9 +21,8 @@ describe 'Model#rquery' do
       include RQuery
     end
 
-
     TestModel.create(:name => "afoo", :description => "abar", :created_at => '2012-03-06')
-    TestModel.create(:name => "aafoo", :description => "aabar", :created_at => '2012-03-07')
+    TestModel.create(:name => "afoo", :description => "aabar", :created_at => '2012-03-07')
     TestModel.create(:name => "bfoo", :description => "bbar", :created_at => '2012-03-07')
     TestModel.create(:name => "cfoo", :description => "cbar", :created_at => '2012-03-08')
 
@@ -33,16 +32,24 @@ describe 'Model#rquery' do
     TestModel.delete_all
   end
 
-  it 'should return [{:created_at => "foo", :description => "bar"}]' do
-    results = TestModel.rquery :limit => "1"
-    results[:results].count.should == 1
+  it 'should return 2' do
+    results = TestModel.rquery :where => "{\"name\":\"afoo\"}", :count => "1"
+    results[:count].should == 2
+  end
+
+  it 'should return 1' do
+    results = TestModel.rquery :where => "{\"name\":\"cfoo\"}",  :count => "1"
+    results[:count].should == 1
+  end
+
+  it 'should return 4' do
+    results = TestModel.rquery :count => "1"
+    results[:count].should == 4
+  end
+
+  it 'should be empty' do
+    results = TestModel.rquery :count => "0"
+    results[:results].count.should == 4
     results[:results].first.name.should == 'afoo'
   end
-
-  it 'should return [{:created_at => "foo", :description => "bar"}]' do
-    results = TestModel.rquery :limit => "3"
-    results[:results].count.should == 3
-    results[:results].last.name.should == 'bfoo'
-  end
-
 end

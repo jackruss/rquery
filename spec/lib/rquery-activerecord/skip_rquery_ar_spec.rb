@@ -1,4 +1,4 @@
-require './lib/rquery_ar'
+require './lib/rquery-activerecord'
 require 'sqlite3'
 require 'active_record'
 

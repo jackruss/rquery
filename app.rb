@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'sqlite3'
 require 'active_record'
-require './lib/rquery_ar'
+require './lib/rquery-activerecord'
 
 ActiveRecord::Base.include_root_in_json = false
 
