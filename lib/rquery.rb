@@ -1,0 +1,1 @@
+require 'rquery_ar'
