@@ -15,7 +15,7 @@ Rquery is a ruby gem that will allow you to pass queries into your restful api a
 
 In your Gemfile
 
-    gem 'rquery', '~> 0.1.0'
+    gem 'rquery-ar', '~> 0.1.0'
 
 # Usage
 
@@ -267,6 +267,6 @@ Returns the next 10 objects
 
 ## Testing the gem
 
-    bundle install
+    gem install r-query
 
     bundle exec rspec spec
