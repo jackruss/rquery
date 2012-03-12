@@ -180,14 +180,14 @@ describe 'Model#rquery' do
     results[:results].should be_empty
   end
 
-  it 'should return [{:name => "foo", :description => "bar"}]' do
-    results = TestModel.rquery :where => "{\"name\":{\"$regexp\":\"(foo)\"}}"
-    results[:results].count.should == 1
-    results[:results].first[:name].should == "foo"
-  end if ActiveRecord::Base.connection.adapter_name == "MySQL"
-
-  it 'should return [{:name => "foo", :description => "bar"}]' do
-    results = TestModel.rquery :where => "{\"name\":{\"$regexp\":\"(bar)\"}}"
-    results[:results].should be_empty
-  end if ActiveRecord::Base.connection.adapter_name == "MySQL"
+  # it 'should return [{:name => "foo", :description => "bar"}]' do
+  #   results = TestModel.rquery :where => "{\"name\":{\"$regexp\":\"(foo)\"}}"
+  #   results[:results].count.should == 1
+  #   results[:results].first[:name].should == "foo"
+  # end if ActiveRecord::Base.connection.adapter_name == "MySQL"
+  #
+  # it 'should return [{:name => "foo", :description => "bar"}]' do
+  #   results = TestModel.rquery :where => "{\"name\":{\"$regexp\":\"(bar)\"}}"
+  #   results[:results].should be_empty
+  # end if ActiveRecord::Base.connection.adapter_name == "MySQL"
 end
