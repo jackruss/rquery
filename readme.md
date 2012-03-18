@@ -15,7 +15,7 @@ Rquery is a set of specs to build orm or datasource libraries that will allow yo
 
 In your Gemfile
 
-    gem 'rquery-activerecord', '~> 0.1.1'
+    gem 'rquery-activerecord', '~> 0.1.5'
 
 # Usage
 
