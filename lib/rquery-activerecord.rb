@@ -24,7 +24,7 @@ module RQuery
     def where_clause(cmd)
       ar_statement, clause = ""
       cmd.each do |key, value|
-        clause = value.kind_of?(Hash) ? where_key_value(key, value) : "#{key} = \"" + value + "\""
+        clause = value.kind_of?(Hash) ? where_key_value(key, value) : "#{self.name.tableize}.#{key} = \"" + value + "\""
         ar_statement += ".where('#{clause}')"
       end
       ar_statement
