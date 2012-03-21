@@ -8,7 +8,7 @@
 
 Rquery is a set of specs to build orm or datasource libraries that will allow you to pass queries into your restful api as json.  It will take the json formatted queries and convert them into an orm or datasource specific query (currently only ActiveRecord is supported).
 
-    http://example.com/users?where={"name":{"foo"}}
+    http://example.com/users?where={"name":"foo"}
 
 
 # Install
