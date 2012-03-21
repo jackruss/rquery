@@ -45,7 +45,7 @@ module RQuery
       elsif action == "IN" || action == "NOT IN"
         "#{key} #{action} #{val.gsub("\'", "\"")}"
       else
-        "#{key} #{action} \"" + val + "\""
+        "#{key} #{action} \"" + val.to_s + "\""
       end
     end
 
