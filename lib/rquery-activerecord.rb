@@ -24,7 +24,11 @@ module RQuery
     def where_clause(cmd)
       ar_statement, clause = ""
       cmd.each do |key, value|
-        clause = value.kind_of?(Hash) ? where_key_value(key, value) : "#{self.name.tableize}.#{key} = \"" + value.gsub("'", "\\\\'") + "\""
+        if value.kind_of?(Hash)
+          clause = where_key_value(key, value)
+        else
+          clause = value.nil? ? "#{self.name.tableize}.#{key} IS NULL" : "#{self.name.tableize}.#{key} = \"" + value.gsub("'", "\\\\'") + "\""
+        end
         ar_statement += ".where('#{clause}')"
       end
       ar_statement
@@ -45,7 +49,7 @@ module RQuery
       elsif action == "IN" || action == "NOT IN"
         "#{key} #{action} #{val.gsub("\'", "\"")}"
       else
-        "#{key} #{action} \"" + val.to_s + "\""
+        val.nil? ? "#{key} #{action} IS NULL" : "#{key} #{action} \"" + (val.gsub("'", "\\\\'")).to_s + "\""
       end
     end
 
