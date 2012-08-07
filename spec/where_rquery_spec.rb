@@ -24,10 +24,10 @@ describe 'GET /resources' do
 
   context 'where multiple attributes' do
     it 'should return a result where name equals foo and description equals bar' do
-      get '/resources', :where => "{\"name\":\"foo\",\"description\":\"bar\"}"
+      get '/resources', :where => "{\"name\":\"foo's\",\"description\":\"bar\"}"
       last_response.headers["Content-Type"].should == 'application/json;charset=utf-8'
       last_response.should be_ok #checks status code 200
-      JSON.parse(last_response.body)['results'].first["name"].should == "foo"
+      JSON.parse(last_response.body)['results'].first["name"].should == "foo's"
       JSON.parse(last_response.body)['results'].first["description"].should == "bar"
     end
 
