@@ -27,7 +27,7 @@ module RQuery
         if value.kind_of?(Hash)
           clause = where_key_value(key, value)
         else
-          clause = value.nil? ? "#{self.name.tableize}.#{key} IS NULL" : "#{self.name.tableize}.#{key} = \"" + value.gsub("'", "\\\\'") + "\""
+          clause = value.nil? ? "#{self.table_name}.#{key} IS NULL" : "#{self.table_name}.#{key} = \"" + value.gsub("'", "\\\\'") + "\""
         end
         ar_statement += ".where('#{clause}')"
       end
