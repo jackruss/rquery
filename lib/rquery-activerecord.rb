@@ -8,6 +8,7 @@ module RQuery
         # TODO includes_clause(JSON.parse(cmd[:includes])) if cmd[:includes]
         # TODO joins_clause(JSON.parse(cmd[:joins])) if cmd[:joins]
         ar_statement += where_clause(JSON.parse(cmd[:where])) if cmd[:where]
+        ar_statement += or_clause(JSON.parse(cmd[:or])) if cmd[:or]
         ar_statement += order_clause(JSON.parse(cmd[:order])) if cmd[:order]
         ar_statement += limit_clause(cmd[:limit]) if cmd[:limit]
         ar_statement += skip_clause(cmd[:skip]) if cmd[:skip]
@@ -51,6 +52,21 @@ module RQuery
       else
         val.nil? ? "#{key} #{action} IS NULL" : "#{key} #{action} \"" + (val.gsub("'", "\\\\'")).to_s + "\""
       end
+    end
+
+    def or_clause(cmd)
+      ar_statement = ''
+      clauses = []
+      cmd.each do |key, value|
+        if value.kind_of?(Hash)
+          clause.push(where_key_value(key, value))
+        else
+          clause = value.nil? ? "#{self.table_name}.#{key} IS NULL" : "#{self.table_name}.#{key} = \"" + value.gsub("'", "\\\\'") + "\""
+          clauses.push(clause)
+        end
+      end
+      joined = clauses.join(" OR ")
+      ar_statement = ".where('#{joined}')"
     end
 
     ## ORDER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
