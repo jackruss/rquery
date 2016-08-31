@@ -18,7 +18,7 @@ describe 'GET /resources' do
   end
 
   it 'should return results using actions' do
-    get '/resources', :or => "{\"name\":\"foo\",\"created_at\":{\"$gt\":\"2012-03-01\"}}"
+    get '/resources', :or => "{\"name\":\"foo\",\"created_at\":{\"$gt\":\"2012-03-11\"}}"
     last_response.headers["Content-Type"].should == 'application/json;charset=utf-8'
     last_response.should be_ok #checks status code 200
     JSON.parse(last_response.body)['results'].first["name"].should == "foo"

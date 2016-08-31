@@ -59,7 +59,7 @@ module RQuery
       clauses = []
       cmd.each do |key, value|
         if value.kind_of?(Hash)
-          clause.push(where_key_value(key, value))
+          clauses.push(where_key_value(key, value))
         else
           clause = value.nil? ? "#{self.table_name}.#{key} IS NULL" : "#{self.table_name}.#{key} = \"" + value.gsub("'", "\\\\'") + "\""
           clauses.push(clause)
