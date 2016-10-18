@@ -8,4 +8,7 @@ Gem::Specification.new do |s|
   s.files       = ["./lib/rquery-activerecord.rb"]
   s.homepage    = 'https://github.com/jackruss/rquery'
   s.add_dependency 'json', '~> 1.6.3'
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'activerecord'
+  s.add_development_dependency 'sqlite3'
 end
