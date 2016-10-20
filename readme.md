@@ -45,6 +45,7 @@ In your model:
 Field | Values | Required | type | Description
 ------|--------|----------|------|-------------
 where | [[queries]] | No | JSON | filter criteria for results
+or    | [[queries]] | No | JSON | filter criteria for results using or
 order | [[queries]] | No | array| array of columns you want to sort by, prepend DESC to indicate descending, default is ascending
 count | [[queries]] | No | Integer(=1) | returns the number of results
 limit | [[queries]] | No | Integer | number of medications to return
@@ -204,6 +205,24 @@ Each will return the record where name equals "foo"
     }
 
 Returns all records where name matches "foo"
+
+### Or
+
+Works like where only using the OR clause between each statement
+
+### single or comparison
+    {
+      "or": {"name":"foo","description":"bar"}
+    }
+
+Returns any results with the name "foo" or description of "bar"
+
+### using attributes
+    {
+      "or": {"id":{"$gt":"2"}, "name":"foo"}
+    }
+
+Returns any results with an id greater than 2 or a name of "foo"
 
 ### Order Attribute
 
